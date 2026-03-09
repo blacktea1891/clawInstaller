@@ -286,6 +286,20 @@ namespace OpenClawInstaller
             ps1Builder.AppendLine("$env:PATH = \"$scriptDir\\nodejs;$scriptDir\\git_env\\cmd;$env:PATH\"");
             ps1Builder.AppendLine("Set-Location -Path \"$scriptDir\\openclaw_app\"");
             ps1Builder.AppendLine("");
+                        // --- 插入修复代码：定义缺失的 Run-Onboard 函数 ---
+            ps1Builder.AppendLine("function Run-Onboard {");
+            ps1Builder.AppendLine("    Clear-Host");
+            ps1Builder.AppendLine("    Write-Host \"✓ 正在运行 OpenClaw Onboard 向导...\" -ForegroundColor Cyan");
+            ps1Builder.AppendLine("    Write-Host \"提示: 首次运行或更换 API Key 时需要执行此操作。\"");
+            ps1Builder.AppendLine("    Write-Host \"========================================\"");
+            ps1Builder.AppendLine("    npx openclaw onboard");
+            ps1Builder.AppendLine("    Write-Host \"\"");
+            ps1Builder.AppendLine("    Write-Host \"向导运行结束！按任意键返回主菜单...\"");
+            ps1Builder.AppendLine("    $null = $host.UI.RawUI.ReadKey(\"NoEcho,IncludeKeyDown\")");
+            ps1Builder.AppendLine("    Show-Menu");
+            ps1Builder.AppendLine("}");
+            ps1Builder.AppendLine("");
+            // ------------------------------------------------
             ps1Builder.AppendLine("function Show-Menu {");
             ps1Builder.AppendLine("    Clear-Host");
             ps1Builder.AppendLine("    Write-Host \"  🦞 OpenClaw\"");
@@ -309,6 +323,7 @@ namespace OpenClawInstaller
             ps1Builder.AppendLine("    }");
             ps1Builder.AppendLine("}");
             ps1Builder.AppendLine("");
+
             ps1Builder.AppendLine("function Run-Gateway {");
             ps1Builder.AppendLine("    $path1 = \"$env:USERPROFILE\\.openclaw\\gateway.cmd\"");
             ps1Builder.AppendLine("    $path2 = \"$env:USERPROFILE\\gateway.cmd\"");
@@ -406,3 +421,4 @@ namespace OpenClawInstaller
         }
     }
 }
+
