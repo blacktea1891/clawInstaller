@@ -330,9 +330,9 @@ namespace OpenClawInstaller
             ps1Builder.AppendLine("try {");
             ps1Builder.AppendLine("    $ErrorActionPreference = 'SilentlyContinue'");
             ps1Builder.AppendLine("    nvidia-smi -L > $null 2>&1");
-            ps1Builder.AppendLine("    if ($LASTEXITCODE -eq 0) { $env:NODE_LLAMA_CPP_BUILD_TYPE = \"\"cuda\"\" }"); 
-            ps1Builder.AppendLine("    else { $env:NODE_LLAMA_CPP_BUILD_TYPE = \"\"cpu\"\" }");
-            ps1Builder.AppendLine("} catch { $env:NODE_LLAMA_CPP_BUILD_TYPE = \"\"cpu\"\" }");
+            ps1Builder.AppendLine("    if ($LASTEXITCODE -eq 0) { $env:NODE_LLAMA_CPP_BUILD_TYPE = 'cuda' }");
+            ps1Builder.AppendLine("    else { $env:NODE_LLAMA_CPP_BUILD_TYPE = 'cpu' }");
+            ps1Builder.AppendLine("} catch { $env:NODE_LLAMA_CPP_BUILD_TYPE = 'cpu' }");
             ps1Builder.AppendLine("finally { $ErrorActionPreference = 'Continue' }");
             
             ps1Builder.AppendLine("Set-Location -Path \"$scriptDir\\openclaw_app\"");
@@ -471,6 +471,7 @@ namespace OpenClawInstaller
         }
     }
 }
+
 
 
 
