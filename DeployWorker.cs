@@ -207,21 +207,24 @@ namespace OpenClawInstaller
                 }
                 catch 
                 {
-                     // 如果找不到 nvidia-smi 命令，说明没有 NVIDIA 显卡，保持 cpu 模式
+                   // 找不到 nvidia-smi 说明没显卡或驱动，默认走 cpu
+                   buildType = "cpu";
                  }
 
                  DebugLog(logger, $"检测到环境，设置编译类型为: {buildType}");
                 // --- 智能检测逻辑结束 ---
                 var psiInstall = new ProcessStartInfo
                 {
-                    FileName = npmCmdPath,
-                    Arguments = npmInstallArgs,
-                    WorkingDirectory = appDir,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    StandardOutputEncoding = Encoding.UTF8
+                    var psiInstall = new ProcessStartInfo {
+                        FileName = npmCmdPath,
+                        Arguments = npmInstallArgs, 
+                        WorkingDirectory = appDir,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        StandardOutputEncoding = Encoding.UTF8,
+                        StandardErrorEncoding = Encoding.UTF8
                 };
 
                 psiInstall.EnvironmentVariables["NODE_LLAMA_CPP_BUILD_TYPE"] = buildType;
@@ -464,6 +467,7 @@ namespace OpenClawInstaller
         }
     }
 }
+
 
 
 
