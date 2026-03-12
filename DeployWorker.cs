@@ -230,7 +230,7 @@ namespace OpenClawInstaller
                 psiInstall.EnvironmentVariables["PATH"] = customPathEnv;
                 DebugLog(logger, $"[Critical] Setting BUILD_TYPE to: {buildType}");
                 DebugLog(logger, $"执行命令: {psiInstall.FileName} {psiInstall.Arguments}");
-                // ========== 必须新增以下代码（针对虚拟机崩溃的终极杀招） ==========
+                // ========== 针对未检测到 GPU 的环境，强制本地 CPU 编译==========
                 if (buildType == "cpu")
                 {
                  // 彻底禁止 node-llama-cpp 去网上找预编译包和乱摸显卡
@@ -471,6 +471,7 @@ namespace OpenClawInstaller
         }
     }
 }
+
 
 
 
